@@ -31,13 +31,13 @@ function createSummary(item, classes) {
             {item.codigoReferencia}
           </Box>
         </Typography>
-        {/* <TextField
+        <TextField
           id={id}
           classes={{ root: classes.textField }}
           label="Descrição"
           margin="normal"
-          value={item.descricao}
-        /> */}
+          variant="outlined"
+        />
       </div>
     );
   } else {
@@ -50,30 +50,41 @@ function createSummary(item, classes) {
             {item.codigoReferencia}
           </Box>
         </Typography>
-        {/* <TextField
+        <TextField
           id={`serv_ref_${item.id}`}
           classes={{ root: classes.textField }}
           label="Referencial"
           margin="normal"
+          variant="outlined"
         />
         <TextField
           id={`serv_codaux_${item.id}`}
           classes={{ root: classes.textField }}
           label="Codigo Auxiliar"
           margin="normal"
+          variant="outlined"
         />
         <TextField
           id={`serv_desc_${item.id}`}
           classes={{ root: classes.textField }}
           label="Descrição"
           margin="normal"
+          variant="outlined"
         />
         <TextField
           id={`serv_qtd_${item.id}`}
           classes={{ root: classes.textField }}
           label="Quantidade"
           margin="normal"
-        /> */}
+          variant="outlined"
+        />
+        <TextField
+          id={`serv_unid_${item.id}`}
+          classes={{ root: classes.textField }}
+          label="Unidade Medida"
+          margin="normal"
+          variant="outlined"
+        />
       </div>
     );
   }
@@ -92,21 +103,18 @@ function renderPainel(item) {
         key={item.id}
         classes={{
           root: classes.painel,
-          expanded: classes.painelExpandido,
         }}>
         <ExpansionPanelSummary
           className={`${classes.cabecalhoBase} ${cabecalho}`}
           expandIcon={<ExpandMoreIcon />}
-          classes={{
-            expanded: classes.painelExpandido,
-          }}>
+        >
           {createSummary(item, classes)}
         </ExpansionPanelSummary>
         <ExpansionPanelDetails
           className={`${classes.detalheBase} ${detalhe}`}>
           <div className={classes.root}>
             {item.filhos && item.filhos.map(renderPainel)}
-            {/* {(!item.filhos || item.filhos === undefined) && <GridMemoria />} */}
+            {(!item.filhos || item.filhos === undefined) && <div className={classes.rootMemoria}><GridMemoria /></div>}
           </div>
         </ExpansionPanelDetails>
       </ExpansionPanel>

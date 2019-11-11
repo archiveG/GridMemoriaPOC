@@ -2,13 +2,14 @@ export default {
   painel: {
     width: '100%',
   },
-  painelExpandido: {
-    margin: '0 !important',
-  },
 
 
   root: {
     width: '100%',
+  },
+
+  rootMemoria: {
+    width: '98%',
   },
 
   cabecalhoGrupoFocus: {
@@ -21,12 +22,8 @@ export default {
     backgroundColor: '#c5e1a5',
   },
 
-  cabecalhoExpandido: {
-    minHeight: 'auto !important',
-  },
   cabecalhoBase: {
-    height: '3rem',
-    padding: '8px 0 8px 24px',
+    // padding: '0',
   },
   cabecalhoGrupo: {
     backgroundColor: '#bbdefb',
@@ -39,7 +36,7 @@ export default {
   },
 
   detalheBase: {
-    padding: '8px 0 8px 24px',
+    padding: '8px 0 24px 24px',
   },
   detalheGrupo: {
     backgroundColor: '#e3f2fd',
@@ -58,9 +55,8 @@ export default {
   },
 
   textField: {
-    height: 32,
     padding: '0',
-    margin: '0',
+    margin: '0 6px',
     alignItems: 'center',
   }
 }
