@@ -13,18 +13,24 @@ export default {
   },
 
   cabecalhoGrupoFocus: {
-    backgroundColor: '#90caf9',
+    backgroundColor: '#bbdefb',
+    '&$focused': {
+      backgroundColor: '#90caf9',
+    },
   },
   cabecalhoSubGrupoFocus: {
-    backgroundColor: '#ffe082',
+    backgroundColor: '#ffecb3',
+    '&$focused': {
+      backgroundColor: '#ffe082',
+    },
   },
   cabecalhoServicoFocus: {
-    backgroundColor: '#c5e1a5',
+    backgroundColor: '#dcedc8',
+    '&$focused': {
+      backgroundColor: '#c5e1a5',
+    },
   },
 
-  cabecalhoBase: {
-    // padding: '0',
-  },
   cabecalhoGrupo: {
     backgroundColor: '#bbdefb',
   },

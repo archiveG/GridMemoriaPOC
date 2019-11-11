@@ -93,9 +93,9 @@ function createSummary(item, classes) {
 
 function renderPainel(item) {
   let classes = useStyles();
-  let cabecalho = item.tipo === 'GRUPO' ? classes.cabecalhoGrupo : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupo : classes.cabecalhoServico;
+ // let cabecalho = item.tipo === 'GRUPO' ? classes.cabecalhoGrupo : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupo : classes.cabecalhoServico;
   let detalhe = item.tipo === 'GRUPO' ? classes.detalheGrupo : item.tipo === 'SUBGRUPO' ? classes.detalheSubGrupo : classes.detalheServico;
-  //let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
+  let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
 
   return (
     <div>
@@ -105,8 +105,11 @@ function renderPainel(item) {
           root: classes.painel,
         }}>
         <ExpansionPanelSummary
-          className={`${classes.cabecalhoBase} ${cabecalho}`}
+          className={focus}
           expandIcon={<ExpandMoreIcon />}
+          // classes={{
+          //   root: focus,
+          // }}
         >
           {createSummary(item, classes)}
         </ExpansionPanelSummary>
@@ -125,7 +128,7 @@ function renderPainel(item) {
 export default function Sanfona(props) {
   const classes = useStyles();
 
-  console.log('itens', props);
+  console.log({ props });
 
   return (
     <div className={classes.root}>
