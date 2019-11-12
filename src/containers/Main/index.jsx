@@ -2,7 +2,6 @@ import React, { PureComponent, Fragment } from 'react';
 import { Link } from 'react-router-dom';
 
 import { GlobalStyle } from 'core/assets/style/global';
-import logo from 'core/assets/images/logo.svg';
 import { AppHeader, AppContainer } from './styled';
 
 class App extends PureComponent {

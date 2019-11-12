@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { Typography, Box } from "@material-ui/core";
 
 export default function TextoReferencia({ id, texto }) {
@@ -12,3 +13,8 @@ export default function TextoReferencia({ id, texto }) {
     </Typography>
   );
 }
+
+TextoReferencia.propsTypes = {
+  id: PropTypes.string.isRequired,
+  texto: PropTypes.string.isRequired,
+};
