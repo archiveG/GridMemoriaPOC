@@ -7,6 +7,8 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
+import { toast } from 'react-toastify';
+
 import GridMemoria from 'containers/GridMemoria';
 
 import styles from './styles';
@@ -15,14 +17,13 @@ import Campo from '../../components/Campo';
 
 const useStyles = makeStyles(styles);
 
-const onClickCabecalho = (item, e) => {
-  e.stopPropagation();
-  console.log({ item });
-}
-
 const atalhosCabecalho = (item, e) => {
-  if (e.ctrlKey && e.which === 40) {
-    console.log("Control PLus " + item.tipo);
+  if (e.ctrlKey) {
+    if (e.which === 38) {
+      toast.info(`Novo ${item.tipo} adicionado acima`);
+    } else if (e.which === 40) {
+      toast.info(`Novo ${item.tipo} adicionado abaixo`);
+    }
   }
 }
 
