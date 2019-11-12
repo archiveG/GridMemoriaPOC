@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 
 import TextField from '@material-ui/core/TextField';
@@ -9,34 +9,46 @@ import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import SearchIcon from '@material-ui/icons/Search';
 
 import GridMemoria from 'containers/GridMemoria';
 
 import styles from './styles';
-import { Box } from '@material-ui/core';
+import { Box, InputAdornment, IconButton } from '@material-ui/core';
+import TextoReferencia from '../../components/TextoReferencia';
 
 const useStyles = makeStyles(styles);
 
-function createSummary(item, classes) {
+const onClickCabecalho = (item, e) => {
+  e.stopPropagation();
+  console.log({ item });
+}
 
+const atalhosCabecalho = (item, e) => {
+  if (e.ctrlKey && e.which === 65) {
+    if (item.tipo === 'GRUPO') {
+
+    } else {
+      console.log("Control PLus " + item.tipo);
+    }
+  }
+}
+
+function createSummary(item, classes) {
   if (item.tipo === 'GRUPO' || item.tipo === 'SUBGRUPO') {
     let id = item.tipo === 'GRUPO' ? `grup_desc_${item.id}` : `sub_desc_${item.id}`;
 
     return (
       <div className={classes.conteudoCabecalho}>
-        <Typography
-          id={`grup_codref_${item.id}`}
-          component="div">
-          <Box fontWeight="fontWeightBold" m={1}>
-            {item.codigoReferencia}
-          </Box>
-        </Typography>
+        <TextoReferencia id={`grup_codref_${item.id}`} texto={item.codigoReferencia} />
         <TextField
           id={id}
           classes={{ root: classes.textField }}
           label="Descrição"
           margin="normal"
           variant="outlined"
+          value={item.descricao}
+          onClick={(e) => onClickCabecalho(item, e)}
         />
       </div>
     );
@@ -46,7 +58,7 @@ function createSummary(item, classes) {
         <Typography
           id={`serv_codref_${item.id}`}
           component="div">
-          <Box fontWeight="fontWeightBold" m={1}>
+          <Box fontWeight="fontWeightBold">
             {item.codigoReferencia}
           </Box>
         </Typography>
@@ -63,6 +75,11 @@ function createSummary(item, classes) {
           label="Codigo Auxiliar"
           margin="normal"
           variant="outlined"
+          InputProps={{
+            endAdornment: <InputAdornment position="end">
+              <IconButton><SearchIcon /></IconButton>
+            </InputAdornment>,
+          }}
         />
         <TextField
           id={`serv_desc_${item.id}`}
@@ -93,7 +110,7 @@ function createSummary(item, classes) {
 
 function renderPainel(item) {
   let classes = useStyles();
- // let cabecalho = item.tipo === 'GRUPO' ? classes.cabecalhoGrupo : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupo : classes.cabecalhoServico;
+  // let cabecalho = item.tipo === 'GRUPO' ? classes.cabecalhoGrupo : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupo : classes.cabecalhoServico;
   let detalhe = item.tipo === 'GRUPO' ? classes.detalheGrupo : item.tipo === 'SUBGRUPO' ? classes.detalheSubGrupo : classes.detalheServico;
   let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
 
@@ -107,9 +124,7 @@ function renderPainel(item) {
         <ExpansionPanelSummary
           className={focus}
           expandIcon={<ExpandMoreIcon />}
-          // classes={{
-          //   root: focus,
-          // }}
+          onKeyUp={e => atalhosCabecalho(item, e)}
         >
           {createSummary(item, classes)}
         </ExpansionPanelSummary>
@@ -125,16 +140,29 @@ function renderPainel(item) {
   );
 }
 
-export default function Sanfona(props) {
+
+
+export default function Sanfona({ valores }) {
   const classes = useStyles();
 
-  console.log({ props });
+  const [itens, setItens] = useState(valores);
+
+  const addGroup = () => {
+    setItens([
+      ...itens,
+      {
+        id: itens.length,
+        tipo: 'GRUPO',
+        filhos: [],
+      }
+    ])
+  }
 
   return (
     <div className={classes.root}>
 
       {
-        props.itens.map(renderPainel)
+        itens.map(renderPainel)
       }
 
     </div>

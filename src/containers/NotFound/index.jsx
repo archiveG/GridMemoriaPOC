@@ -184,7 +184,7 @@ export default function NotFound() {
 
   return (
     <div>
-      <Sanfona itens={itens}/>
+      <Sanfona valores={itens}/>
     </div>
   );
 }
