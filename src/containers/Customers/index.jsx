@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
-import { Spinner } from 'components';
 import { actions } from './store/actions';
 import { Container } from './styled';
 import { selectors } from './store/reducer';
@@ -17,7 +16,6 @@ const Customers = ({ loaders, getCustomers, customers }) => {
     <Container>
       <div>
         <h1>CUSTOMERS:</h1>
-        <Spinner show={loaders.customersList} />
         <ul>
           {customers.length > 0 &&
             !loaders.customersList &&
