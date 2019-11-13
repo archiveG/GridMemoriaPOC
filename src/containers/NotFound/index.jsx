@@ -1,9 +1,38 @@
 import React from 'react';
+import PropTypes from 'prop-types';
+
 import Sanfona from 'containers/Sanfona'
+
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
+import { ShortcutManager } from 'react-shortcuts';
+
+const keymap = {
+  CABECALHO: {
+    CRIAR_IGUAL_ACIMA: ["ctrl+up"],
+    CRIAR_IGUAL_ABAIXO: ["ctrl+down"],
+
+    CRIAR_GRUPO_ACIMA: ["ctrl+alt+g"],
+    CRIAR_GRUPO_ABAIXO: ["ctrl+g"],
+
+    CRIAR_SUB_GRUPO_ACIMA: ["ctrl+alt+a"],
+    CRIAR_SUB_GRUPO_ABAIXO: ["ctrl+a"],
+
+    CRIAR_SERVICO_ACIMA: ["ctrl+alt+s"],
+    CRIAR_SERVICO_ABAIXO: ["ctrl+s"],
+
+    EXCLUIR: ["ctrl+del"]
+  }
+};
+
+const shortcutManager = new ShortcutManager(keymap);
+
 export default function NotFound() {
+
+  function getChildContext() {
+    return { shortcuts: shortcutManager }
+  }
 
   const itens = [
     {
@@ -187,7 +216,11 @@ export default function NotFound() {
   return (
     <div>
       <ToastContainer />
-      <Sanfona valores={itens}/>
+      <Sanfona valores={itens} />
     </div>
   );
 }
+
+NotFound.childContextTypes = {
+  shortcuts: PropTypes.object.isRequired
+};

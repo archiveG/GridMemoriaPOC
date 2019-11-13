@@ -3,7 +3,6 @@ export default {
     width: '100%',
   },
 
-
   root: {
     width: '100%',
   },

@@ -8,6 +8,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { toast } from 'react-toastify';
+import { Shortcuts} from 'react-shortcuts'
 
 import GridMemoria from 'containers/GridMemoria';
 
@@ -17,15 +18,6 @@ import Campo from '../../components/Campo';
 
 const useStyles = makeStyles(styles);
 
-const atalhosCabecalho = (item, e) => {
-  if (e.ctrlKey) {
-    if (e.which === 38) {
-      toast.info(`Novo ${item.tipo} adicionado acima`);
-    } else if (e.which === 40) {
-      toast.info(`Novo ${item.tipo} adicionado abaixo`);
-    }
-  }
-}
 
 function createSummary(item, classes) {
   if (item.tipo === 'GRUPO' || item.tipo === 'SUBGRUPO') {
@@ -53,33 +45,43 @@ function createSummary(item, classes) {
 
 };
 
-function renderPainel(item) {
+const renderPainel = (item) => {
   let classes = useStyles();
   // let cabecalho = item.tipo === 'GRUPO' ? classes.cabecalhoGrupo : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupo : classes.cabecalhoServico;
   let detalhe = item.tipo === 'GRUPO' ? classes.detalheGrupo : item.tipo === 'SUBGRUPO' ? classes.detalheSubGrupo : classes.detalheServico;
   let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
 
+  const handleAtalhosCabecalho = (action, e) => {
+    e.preventDefault();
+
+    if (action === 'CRIAR_IGUAL_ACIMA') {
+      toast.info(`Novo ${item.tipo} adicionado acima`);
+    } else if (action === 'CRIAR_IGUAL_ABAIXO') {
+      toast.info(`Novo ${item.tipo} adicionado abaixo`);
+    } else {
+      toast.info(`deafult`);
+    }
+  }
+
   return (
-    <div>
-      <ExpansionPanel
-        key={item.id}
-        classes={{ root: classes.painel }}>
-        <ExpansionPanelSummary
-          className={focus}
-          expandIcon={<ExpandMoreIcon />}
-          onKeyUp={e => atalhosCabecalho(item, e)}
-        >
+    <ExpansionPanel
+      key={item.id}
+      classes={{ root: classes.painel }}>
+
+      <Shortcuts name="CABECALHO" handler={handleAtalhosCabecalho}>
+        <ExpansionPanelSummary className={focus} expandIcon={<ExpandMoreIcon />}>
           {createSummary(item, classes)}
         </ExpansionPanelSummary>
-        <ExpansionPanelDetails
-          className={`${classes.detalheBase} ${detalhe}`}>
-          <div className={classes.root}>
-            {item.filhos && item.filhos.map(renderPainel)}
-            {(!item.filhos || item.filhos === undefined) && <div className={classes.rootMemoria}><GridMemoria /></div>}
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </div>
+      </Shortcuts>
+
+      <ExpansionPanelDetails
+        className={`${classes.detalheBase} ${detalhe}`}>
+        <div className={classes.root}>
+          {item.filhos && item.filhos.map(renderPainel)}
+          {(!item.filhos || item.filhos === undefined) && <div className={classes.rootMemoria}><GridMemoria /></div>}
+        </div>
+      </ExpansionPanelDetails>
+    </ExpansionPanel>
   );
 }
 
@@ -103,7 +105,6 @@ export default function Sanfona({ valores }) {
 
   return (
     <div className={classes.root}>
-
       {
         itens.map(renderPainel)
       }
