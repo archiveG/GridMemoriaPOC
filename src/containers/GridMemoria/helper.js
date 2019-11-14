@@ -1,10 +1,10 @@
-import mathjs from "mathjs";
+import { evaluate } from "mathjs";
 
 export function validateFormula(formula = [], nuCasaDecimal = 2) {
   const expr = formula.map(item => item.toString().replace(",", "."));
 
   try {
-    const result = mathjs.eval(expr.join("")).toFixed(nuCasaDecimal);
+    const result = evaluate(expr.join("")).toFixed(nuCasaDecimal);
 
     if (isNaN(result)) {
       throw new Error("Fórmula ou valores inválidos!");
