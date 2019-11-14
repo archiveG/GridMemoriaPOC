@@ -8,7 +8,7 @@ import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 import { toast } from 'react-toastify';
-import { Shortcuts} from 'react-shortcuts'
+import { HotKeys } from "react-hotkeys";
 
 import GridMemoria from 'containers/GridMemoria';
 
@@ -51,28 +51,52 @@ const renderPainel = (item) => {
   let detalhe = item.tipo === 'GRUPO' ? classes.detalheGrupo : item.tipo === 'SUBGRUPO' ? classes.detalheSubGrupo : classes.detalheServico;
   let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
 
-  const handleAtalhosCabecalho = (action, e) => {
-    e.preventDefault();
-
-    if (action === 'CRIAR_IGUAL_ACIMA') {
+  const handleAtalhosCabecalho = {
+    CRIAR_IGUAL_ACIMA: event => {
+      event.preventDefault();
       toast.info(`Novo ${item.tipo} adicionado acima`);
-    } else if (action === 'CRIAR_IGUAL_ABAIXO') {
+    },
+    CRIAR_IGUAL_ABAIXO: event => {
+      event.preventDefault();
       toast.info(`Novo ${item.tipo} adicionado abaixo`);
-    } else {
-      toast.info(`deafult`);
-    }
+    },
+    CRIAR_GRUPO_ACIMA: event => {
+      event.preventDefault();
+      toast.info(`Novo Grupo adicionado acima`);
+    },
+    CRIAR_GRUPO_ABAIXO: event => {
+      event.preventDefault();
+      toast.info(`Novo Grupo adicionado abaixo`);
+    },
+
   }
+
+  const keyMap = {
+    CRIAR_IGUAL_ACIMA: "ctrl+up",
+    CRIAR_IGUAL_ABAIXO: "ctrl+down",
+
+    CRIAR_GRUPO_ACIMA: "ctrl+alt+g",
+    CRIAR_GRUPO_ABAIXO: "ctrl+g",
+
+    CRIAR_SUB_GRUPO_ACIMA: "ctrl+alt+a",
+    CRIAR_SUB_GRUPO_ABAIXO: "ctrl+a",
+
+    CRIAR_SERVICO_ACIMA: "ctrl+alt+s",
+    CRIAR_SERVICO_ABAIXO: "ctrl+s",
+
+    EXCLUIR: "ctrl+del"
+  };
 
   return (
     <ExpansionPanel
       key={item.id}
       classes={{ root: classes.painel }}>
 
-      <Shortcuts name="CABECALHO" handler={handleAtalhosCabecalho}>
+      <HotKeys keyMap={keyMap} handlers={handleAtalhosCabecalho}>
         <ExpansionPanelSummary className={focus} expandIcon={<ExpandMoreIcon />}>
           {createSummary(item, classes)}
         </ExpansionPanelSummary>
-      </Shortcuts>
+      </HotKeys>
 
       <ExpansionPanelDetails
         className={`${classes.detalheBase} ${detalhe}`}>
@@ -84,8 +108,6 @@ const renderPainel = (item) => {
     </ExpansionPanel>
   );
 }
-
-
 
 export default function Sanfona({ valores }) {
   const classes = useStyles();
