@@ -69,7 +69,7 @@ export default function Cabecalho({ item }) {
       return (
         <div className={classes.conteudoCabecalho}>
           <TextoReferencia id={`grup_codref_${item.id}`} texto={item.codigoReferencia} />
-          <Campo id={id} label="Descrição" />
+          <Campo id={id} label="Descrição" item={item} />
         </div>
       );
     } else {
@@ -77,11 +77,11 @@ export default function Cabecalho({ item }) {
         <div className={classes.conteudoCabecalho}>
           <TextoReferencia id={`serv_codref_${item.id}`} texto={item.codigoReferencia} />
 
-          <Campo id={`serv_ref_${item.id}`} label="Referencial" />
-          <Campo id={`serv_codaux_${item.id}`} label="Codigo Auxiliar" />
-          <Campo id={`serv_desc_${item.id}`} label="Descrição" />
-          <Campo id={`serv_qtd_${item.id}`} label="Quantidade" />
-          <Campo id={`serv_unid_${item.id}`} label="Unidade Medida" />
+          <Campo id={`serv_ref_${item.id}`} label="Referencial" item={item}/>
+          <Campo id={`serv_codaux_${item.id}`} label="Codigo Auxiliar" item={item}/>
+          <Campo id={`serv_desc_${item.id}`} label="Descrição" item={item}/>
+          <Campo id={`serv_qtd_${item.id}`} label="Quantidade" item={item}/>
+          <Campo id={`serv_unid_${item.id}`} label="Unidade Medida" item={item}/>
         </div>
       );
     }

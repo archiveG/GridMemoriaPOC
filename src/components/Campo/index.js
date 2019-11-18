@@ -1,82 +1,60 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { TextField } from '@material-ui/core';
-import { makeStyles } from '@material-ui/core/styles';
 
-import { HotKeys } from 'react-hotkeys';
 import { toast } from 'react-toastify';
+import teclas from '../../core/utils/teclas';
 
-import atalhos from '../../core/utils/atalhos';
-
-const useStyles = makeStyles({
-  estiloCampo: {
-    padding: '0',
-    margin: '0 6px',
-    alignItems: 'center',
-  },
-});
+import './style.css';
 
 export default function Campo({ id, label, item }) {
-  let classes = useStyles();
 
-  const handleAtalhos = {
-    CRIAR_IGUAL_ACIMA: event => {
-      event.preventDefault();
-      toast.info(`Novo ${item.tipo} adicionado acima CAMPO`);
-    },
-    CRIAR_IGUAL_ABAIXO: event => {
-      event.preventDefault();
-      toast.info(`Novo ${item.tipo} adicionado abaixo CAMPO`);
-    },
-    CRIAR_GRUPO_ACIMA: event => {
-      event.preventDefault();
-      toast.info(`Novo Grupo adicionado acima CAMPO`);
-    },
-    CRIAR_GRUPO_ABAIXO: event => {
-      event.preventDefault();
-      toast.info(`Novo Grupo adicionado abaixo CAMPO`);
-    },
+  const keyPressed = e => {
+    let tecla = e.keyCode;
+    let control = e.ctrlKey;
+    let alt = e.altKey;
 
-    CRIAR_SUB_GRUPO_ACIMA: event => {
-      event.preventDefault();
-      toast.info(`Novo Sub-grupo adicionado acima CAMPO`);
-    },
-    CRIAR_SUB_GRUPO_ABAIXO: event => {
-      event.preventDefault();
-      toast.info(`Novo Sub-grupo adicionado abaixo CAMPO`);
-    },
+    console.log(`ctrl: ${control} - alt: ${e.altKey} - key: ${e.key} - code: ${tecla}`);
+    if (control && isTeclaValida(tecla)) {
+      e.preventDefault();
 
-    CRIAR_SERVICO_ACIMA: event => {
-      event.preventDefault();
-      toast.info(`Novo Serviço adicionado acima CAMPO`);
-    },
-    CRIAR_SERVICO_ABAIXO: event => {
-      event.preventDefault();
-      toast.info(`Novo Serviço adicionado abaixo CAMPO`);
-    },
+      if (tecla === teclas.SETA_CIMA) {
+        toast.info(`Novo ${item.tipo} adicionado acima FIELD`);
+      } else if (tecla === teclas.SETA_BAIXO) {
+        toast.info(`Novo ${item.tipo} adicionado abaixo FIELD`);
+      } else if (alt && tecla === teclas.G) {
+        toast.info(`Novo Grupo adicionado acima FIELD`);
+      } else if (tecla === teclas.G) {
+        toast.info(`Novo Grupo adicionado abaixo FIELD`);
+      } else if (alt && tecla === teclas.S) {
+        toast.info(`Novo Serviço adicionado acima FIELD`);
+      } else if (tecla === teclas.S) {
+        toast.info(`Novo Serviço adicionado abaixo FIELD`);
+      }
 
-    EXCLUIR: event => {
-      event.preventDefault();
-      toast.info(`item excluido CAMPO`);
-    },
-  }
+    }
+  };
+
+  const isTeclaValida = codigoTecla => {
+    return codigoTecla !== teclas.C
+      && codigoTecla !== teclas.V
+      && codigoTecla !== teclas.A
+      && codigoTecla !== teclas.X
+  };
 
   return (
-    <HotKeys keyMap={atalhos} handlers={handleAtalhos}>
-      <TextField
-        id={id}
-        classes={{ root: classes.estiloCampo }}
-        label={label}
-        margin="normal"
-        variant="outlined"
+    <div id={`${id}-group`} className="sds-form-group">
+      <input id={id}
+        className="sds-input"
+        type="text"
+        placeholder={label}
         onClick={e => e.stopPropagation()}
-      />
-    </HotKeys>
+        onKeyDown={keyPressed} />
+    </div>
   );
 }
 
 Campo.propsTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
-  onClick: PropTypes.func,
+  item: PropTypes.object,
 };
