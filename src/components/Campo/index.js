@@ -1,10 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
+import TextField from '@material-ui/core/TextField';
+
 import { toast } from 'react-toastify';
 import teclas from '../../core/utils/teclas';
-
-import './style.css';
 
 export default function Campo({ id, label, item }) {
 
@@ -45,14 +45,14 @@ export default function Campo({ id, label, item }) {
   };
 
   return (
-    <div id={`${id}-group`} className="sds-form-group">
-      <input id={id}
-        className="sds-input"
-        type="text"
-        placeholder={label}
-        onClick={e => e.stopPropagation()}
-        onKeyDown={keyPressed} />
-    </div>
+    <TextField
+      id={id}
+      label={label}
+      margin="normal"
+      variant="outlined"
+      onClick={e => e.stopPropagation()}
+      onKeyDown={keyPressed}
+    />
   );
 }
 
