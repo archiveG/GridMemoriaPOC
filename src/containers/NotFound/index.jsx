@@ -1,11 +1,27 @@
 import React from 'react';
 
-import Sanfona from 'containers/Sanfona'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
+import blue from '@material-ui/core/colors/blue';
+import grey from '@material-ui/core/colors/grey';
+
+
+import Sanfona from 'containers/Sanfona';
 
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 export default function NotFound() {
+
+  const theme = createMuiTheme({
+    palette: {
+      primary: {
+        main: '#005B95',
+      },
+      secondary: {
+        main: '#474747',
+      },
+    },
+  });
 
   const itens = [
     {
@@ -189,7 +205,9 @@ export default function NotFound() {
   return (
     <div>
       <ToastContainer />
-      <Sanfona valores={itens} />
+      <ThemeProvider theme={theme}>
+        <Sanfona valores={itens} />
+      </ThemeProvider>
     </div>
   );
 }
