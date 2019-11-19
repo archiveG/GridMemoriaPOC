@@ -13,22 +13,25 @@ export default function Campo({ id, label, item }) {
     let control = e.ctrlKey;
     let alt = e.altKey;
 
-    console.log(`ctrl: ${control} - alt: ${e.altKey} - key: ${e.key} - code: ${tecla}`);
     if (control && isTeclaValida(tecla)) {
       e.preventDefault();
 
       if (tecla === teclas.SETA_CIMA) {
-        toast.info(`Novo ${item.tipo} adicionado acima FIELD`);
+        toast.info(`Novo ${item.tipo} adicionado acima`);
       } else if (tecla === teclas.SETA_BAIXO) {
-        toast.info(`Novo ${item.tipo} adicionado abaixo FIELD`);
+        toast.info(`Novo ${item.tipo} adicionado abaixo`);
       } else if (alt && tecla === teclas.G) {
-        toast.info(`Novo Grupo adicionado acima FIELD`);
+        toast.info(`Novo Grupo adicionado acima`);
       } else if (tecla === teclas.G) {
-        toast.info(`Novo Grupo adicionado abaixo FIELD`);
+        toast.info(`Novo Grupo adicionado abaixo`);
       } else if (alt && tecla === teclas.S) {
-        toast.info(`Novo Serviço adicionado acima FIELD`);
+        toast.info(`Novo Serviço adicionado acima`);
       } else if (tecla === teclas.S) {
-        toast.info(`Novo Serviço adicionado abaixo FIELD`);
+        toast.info(`Novo Serviço adicionado abaixo`);
+      } else if (alt && tecla === teclas.I) {
+        toast.info(`Novo SubGrupo adicionado acima`);
+      } else if (tecla === teclas.I) {
+        toast.info(`Novo SubGrupo adicionado abaixo`);
       }
 
     }
