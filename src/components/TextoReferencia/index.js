@@ -6,6 +6,7 @@ export default function TextoReferencia({ id, texto }) {
   return (
     <Typography
       id={id}
+      color="secondary"
       component="div">
       <Box fontWeight="fontWeightBold">
         {texto}

@@ -1,32 +1,13 @@
 export default {
 
   cabecalhoGrupoFocus: {
-    backgroundColor: '#bbdefb',
-    '&$focused': {
-      backgroundColor: '#90caf9',
-    },
+    backgroundColor: '#84d6f5',
   },
   cabecalhoSubGrupoFocus: {
-    backgroundColor: '#ffecb3',
-    '&$focused': {
-      backgroundColor: '#ffe082',
-    },
+    backgroundColor: '#b4e6f9',
   },
   cabecalhoServicoFocus: {
-    backgroundColor: '#dcedc8',
-    '&$focused': {
-      backgroundColor: '#c5e1a5',
-    },
-  },
-
-  cabecalhoGrupo: {
-    backgroundColor: '#bbdefb',
-  },
-  cabecalhoSubGrupo: {
-    backgroundColor: '#ffecb3',
-  },
-  cabecalhoServico: {
-    backgroundColor: '#dcedc8',
+    backgroundColor: '#f1f1f1',
   },
 
   conteudoCabecalho: {

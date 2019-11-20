@@ -1,18 +1,14 @@
 import React, { PureComponent } from 'react';
 import ReactDataGrid from 'react-data-grid';
 import { formatNumberCell, validateFormula } from './helper.js';
-import DecimalNumberEditor from './editors/DecimalNumberEditor';
 
 const WIDTH_COLLUMN_NUMBERS = 100;
 
-const CASAS_DECIMAIS = 6;
+const CASAS_DECIMAIS = 3;
 
 const columns = [
-  { key: 'descricao', name: 'Descrição', editable: true, frozen: true, width: 300 },
-  {
-    key: 'a', name: 'Comp. (a)', editable: true,
-    editor: <DecimalNumberEditor />
-  },
+  { key: 'descricao', name: 'Descrição', editable: true, frozen: true, width: 400 },
+  { key: 'a', name: 'Comp. (a)', editable: true, },
   { key: 'b', name: 'Largura (b)', editable: true, },
   { key: 'c', name: 'Altura (c)', editable: true, },
   { key: 'd', name: '(d)', editable: true, },
@@ -25,99 +21,32 @@ const columns = [
 const rows = [
   {
     'id': 'C6D3DADE-78FA-DB0E-1720-8FD97213387D',
-    'descricao': 'Sodales At Velit Limited',
-    'a': 88,
-    'b': 67,
-    'c': 73,
-    'd': 94,
-    'e': 21,
-    'f': 99,
-    'equacao': 'A + B + C + D + E + F',
-    'resultado': 93
-  },
-  {
-    'id': 'D83454F3-FAED-608A-9379-667903A1A4C6',
-    'descricao': 'Et Ultrices Institute',
-    'a': 3,
-    'b': 91,
-    'c': 70,
-    'd': 96,
-    'e': 70,
-    'f': 90,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 8
-  },
-  {
-    'id': '65ECC976-0E52-2161-BC65-81EB7FC5AD8C',
-    'descricao': 'Augue Eu Ltd',
-    'a': 46,
-    'b': 97,
-    'c': 55,
-    'd': 8,
-    'e': 30,
-    'f': 1,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 29
-  },
-  {
-    'id': 'A01185D7-21D8-29EB-639A-49292E6C26CD',
-    'descricao': 'Libero Nec Ligula Ltd',
-    'a': 25,
-    'b': 24,
-    'c': 16,
-    'd': 30,
-    'e': 64,
-    'f': 96,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 13
-  },
-  {
-    'id': 'BE494204-9B63-1BCF-6CA5-93D9D6D768D6',
-    'descricao': 'Sagittis Nullam Vitae Corporation',
-    'a': 82,
-    'b': 57,
-    'c': 74,
-    'd': 45,
-    'e': 43,
-    'f': 12,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 75
-  },
-  {
-    'id': 'F7FBFF2C-8C09-07A4-510E-02F46CA926BA',
-    'descricao': 'Ac PC',
-    'a': 8,
-    'b': 54,
-    'c': 20,
-    'd': 47,
-    'e': 22,
-    'f': 73,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 18
-  },
-  {
-    'id': 'ADB62523-7D10-B1F4-E7E6-34A01C4F5F18',
-    'descricao': 'Posuere Cubilia Curae; Institute',
-    'a': 92,
-    'b': 92,
-    'c': 96,
-    'd': 58,
-    'e': 82,
-    'f': 50,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 32
-  },
-  {
-    'id': 'D16767F0-31C6-EEB3-556C-007B38DB468A',
-    'descricao': 'Class PC',
-    'a': 37,
+    'descricao': 'Suporte apoio caixa d agua barrotes madeira de 1',
+    'a': 2,
     'b': 2,
-    'c': 28,
-    'd': 48,
-    'e': 78,
-    'f': 91,
-    'equacao': 'A+B+C+D+E+F',
-    'resultado': 65
+    'c': 12,
+    'equacao': '((A^2) * B) + C',
+    'resultado': 20
+  }, {
+    'id': 'D83454F3-FAED-608A-9379-667903A1A4C6',
+    'descricao': 'Caixa d\'agua de polietileno',
+    'a': 5,
+    'b': 10,
+    'c': 15,
+    'd': 70,
+    'equacao': 'A+B+C+D',
+    'resultado': 100
+  }, {
+    'id': '65ECC976-0E52-2161-BC65-81EB7FC5AD8C',
+    'descricao': 'Assento plastico, branco, para vaso sanitario',
+    'a': 10,
+    'b': 20,
+    'c': 10,
+    'd': 10,
+    'e': 5,
+    'f': 2,
+    'equacao': '((A+B+C+D) * E) / F',
+    'resultado': 125
   },
 ];
 
@@ -133,9 +62,9 @@ class GridMemoria extends PureComponent {
       keyUpdated = key;
     }
 
-    if (keyUpdated !== 'descricao' && keyUpdated !== 'equacao') {
-      updated[keyUpdated] = formatNumberCell(updated[keyUpdated], CASAS_DECIMAIS);
-    }
+    // if (keyUpdated !== 'descricao' && keyUpdated !== 'equacao') {
+    //   updated[keyUpdated] = formatNumberCell(updated[keyUpdated], CASAS_DECIMAIS);
+    // }
 
 
     let updatedRow = { ...this.state.rows[toRow] };

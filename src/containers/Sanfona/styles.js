@@ -15,12 +15,12 @@ export default {
     padding: '8px 0 24px 24px',
   },
   detalheGrupo: {
-    backgroundColor: '#e3f2fd',
+    backgroundColor: '#e1f6fc',
   },
   detalheSubGrupo: {
-    backgroundColor: '#fff8e1',
+    backgroundColor: '#edfbff',
   },
   detalheServico: {
-    backgroundColor: '#f1f8e9',
+    backgroundColor: '#fff',
   },
 }

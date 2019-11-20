@@ -12,20 +12,44 @@ import Cabecalho from '../../components/Cabecalho';
 const useStyles = makeStyles(styles);
 
 const Painel = ({ itens, item, updateItens }) => {
-  const addGroup = () => {
-    console.log('addgroup')
-    updateItens([
-      ...itens,
-      {
-        id: itens.length,
-        tipo: 'GRUPO',
-        codigoReferencia: '00',
-        descricao: 'Novo Grupo',
-        filhos: [],
-      }
-    ])
-    updateItens([...itens])
-  }
+
+  const addGroup = (tipo, novo) => {
+    console.log('add Group');
+
+    if(tipo === 'GRUPO') {
+      updateItens([
+        ...itens,
+        {
+          id: itens.length,
+          tipo: 'GRUPO',
+          codigoReferencia: '00',
+          descricao: 'Novo Grupo',
+          filhos: [
+            {
+              id: itens.length++,
+              codigoReferencia: '00.00',
+              descricao: 'Novo Serviço',
+              tipo: 'SERVICO',
+            }
+          ],
+        }
+      ])
+    } else if (tipo === 'SERVICO') {
+      itens.forEach(a => {
+        if(a.id === novo.id) {
+          a.filhos.push({
+            id: novo.filhos.length,
+            codigoReferencia: '00.00',
+            descricao: 'Novo Serviço',
+            tipo: 'SERVICO',
+          });
+        }
+      });
+
+      updateItens([...itens]);
+    }
+
+  };
 
 
   console.log(`${item.codigoReferencia} - ${item.descricao}`)
@@ -43,6 +67,7 @@ const Painel = ({ itens, item, updateItens }) => {
         className={`${classes.detalheBase} ${detalhe}`}>
         <div className={classes.root}>
           {item.filhos && item.filhos.map(itemFilho => <Painel item={itemFilho} itens={itens} updateItens={updateItens} />)}
+
           {(!item.filhos || item.filhos === undefined) &&
             <div className={classes.rootMemoria}>
               <GridMemoria />
