@@ -1,22 +1,7 @@
-import styled, { keyframes } from 'styled-components';
-
-const rotate = keyframes`
-  from {
-    transform: rotate(0deg);
-  }
-
-  to {
-    transform: rotate(360deg);
-  }
-`;
+import styled from 'styled-components';
 
 export const AppContainer = styled.div`
   text-align: center;
-`;
-
-export const AppLogo = styled.img`
-  animation: ${rotate} infinite 20s linear;
-  height: 40vmin;
 `;
 
 export const AppHeader = styled.header`

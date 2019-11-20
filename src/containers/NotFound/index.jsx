@@ -1,9 +1,6 @@
 import React from 'react';
 
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
-import blue from '@material-ui/core/colors/blue';
-import grey from '@material-ui/core/colors/grey';
-
 
 import Sanfona from 'containers/Sanfona';
 
@@ -112,6 +109,7 @@ export default function NotFound() {
         }
       ]
     },
+
     {
       id: '11',
       descricao: 'Grupo 02',

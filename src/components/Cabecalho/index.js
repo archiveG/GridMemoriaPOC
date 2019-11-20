@@ -14,7 +14,7 @@ import atalhos from '../../core/utils/atalhos';
 
 const useStyles = makeStyles(styles);
 
-export default function Cabecalho({ item }) {
+export default function Cabecalho({ item, funcaoAdd }) {
 
   const classes = useStyles();
   let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
@@ -31,13 +31,14 @@ export default function Cabecalho({ item }) {
 
     CRIAR_GRUPO_ACIMA: event => {
       event.preventDefault();
+      funcaoAdd();
       toast.info(`Novo Grupo adicionado acima HEAD`);
     },
     CRIAR_GRUPO_ABAIXO: event => {
       event.preventDefault();
+      funcaoAdd();
       toast.info(`Novo Grupo adicionado abaixo HEAD`);
     },
-
     CRIAR_SUB_GRUPO_ACIMA: event => {
       event.preventDefault();
       toast.info(`Novo Sub-grupo adicionado acima HEAD`);
@@ -69,7 +70,7 @@ export default function Cabecalho({ item }) {
       return (
         <div className={classes.conteudoCabecalho}>
           <TextoReferencia id={`grup_codref_${item.id}`} texto={item.codigoReferencia} />
-          <Campo id={id} label="Descrição" item={item} />
+          <Campo id={id} label={`Descrição do ${item.tipo === 'GRUPO' ? 'grupo' : 'sub grupo'}`} item={item} funcaoAdd={funcaoAdd} />
         </div>
       );
     } else {
@@ -77,11 +78,11 @@ export default function Cabecalho({ item }) {
         <div className={classes.conteudoCabecalho}>
           <TextoReferencia id={`serv_codref_${item.id}`} texto={item.codigoReferencia} />
 
-          <Campo id={`serv_ref_${item.id}`} label="Referencial" item={item}/>
-          <Campo id={`serv_codaux_${item.id}`} label="Codigo Auxiliar" item={item}/>
-          <Campo id={`serv_desc_${item.id}`} label="Descrição" item={item}/>
-          <Campo id={`serv_qtd_${item.id}`} label="Quantidade" item={item}/>
-          <Campo id={`serv_unid_${item.id}`} label="Unidade Medida" item={item}/>
+          <Campo id={`serv_ref_${item.id}`} label="Referencial" item={item} funcaoAdd={funcaoAdd} />
+          <Campo id={`serv_codaux_${item.id}`} label="Codigo Auxiliar" item={item} funcaoAdd={funcaoAdd} />
+          <Campo id={`serv_desc_${item.id}`} label="Descrição do serviço" item={item} funcaoAdd={funcaoAdd} />
+          <Campo id={`serv_qtd_${item.id}`} label="Quantidade" item={item} funcaoAdd={funcaoAdd} />
+          <Campo id={`serv_unid_${item.id}`} label="Unidade Medida" item={item} funcaoAdd={funcaoAdd} />
         </div>
       );
     }
@@ -97,5 +98,6 @@ export default function Cabecalho({ item }) {
 }
 
 Cabecalho.propsTypes = {
-  item: PropTypes.object.isRequired
+  item: PropTypes.object.isRequired,
+  funcaoAdd: PropTypes.func.isRequired,
 }

@@ -6,7 +6,7 @@ import TextField from '@material-ui/core/TextField';
 import { toast } from 'react-toastify';
 import teclas from '../../core/utils/teclas';
 
-export default function Campo({ id, label, item }) {
+export default function Campo({ id, label, item, funcaoAdd }) {
 
   const keyPressed = e => {
     let tecla = e.keyCode;
@@ -21,8 +21,10 @@ export default function Campo({ id, label, item }) {
       } else if (tecla === teclas.SETA_BAIXO) {
         toast.info(`Novo ${item.tipo} adicionado abaixo`);
       } else if (alt && tecla === teclas.G) {
+        funcaoAdd();
         toast.info(`Novo Grupo adicionado acima`);
       } else if (tecla === teclas.G) {
+        funcaoAdd();
         toast.info(`Novo Grupo adicionado abaixo`);
       } else if (alt && tecla === teclas.S) {
         toast.info(`Novo Serviço adicionado acima`);
@@ -60,4 +62,5 @@ Campo.propsTypes = {
   id: PropTypes.string.isRequired,
   label: PropTypes.string.isRequired,
   item: PropTypes.object,
+  funcaoAdd: PropTypes.func,
 };

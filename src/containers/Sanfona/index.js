@@ -11,7 +11,24 @@ import Cabecalho from '../../components/Cabecalho';
 
 const useStyles = makeStyles(styles);
 
-const renderPainel = (item) => {
+const Painel = ({ itens, item, updateItens }) => {
+  const addGroup = () => {
+    console.log('addgroup')
+    updateItens([
+      ...itens,
+      {
+        id: itens.length,
+        tipo: 'GRUPO',
+        codigoReferencia: '00',
+        descricao: 'Novo Grupo',
+        filhos: [],
+      }
+    ])
+    updateItens([...itens])
+  }
+
+
+  console.log(`${item.codigoReferencia} - ${item.descricao}`)
   let classes = useStyles();
   let detalhe = item.tipo === 'GRUPO' ? classes.detalheGrupo : item.tipo === 'SUBGRUPO' ? classes.detalheSubGrupo : classes.detalheServico;
 
@@ -20,13 +37,16 @@ const renderPainel = (item) => {
       key={item.id}
       classes={{ root: classes.painel }}>
 
-      <Cabecalho item={item} />
+      <Cabecalho item={item} funcaoAdd={addGroup} />
 
       <ExpansionPanelDetails
         className={`${classes.detalheBase} ${detalhe}`}>
         <div className={classes.root}>
-          {item.filhos && item.filhos.map(renderPainel)}
-          {(!item.filhos || item.filhos === undefined) && <div className={classes.rootMemoria}><GridMemoria /></div>}
+          {item.filhos && item.filhos.map(itemFilho => <Painel item={itemFilho} itens={itens} updateItens={updateItens} />)}
+          {(!item.filhos || item.filhos === undefined) &&
+            <div className={classes.rootMemoria}>
+              <GridMemoria />
+            </div>}
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>
@@ -38,23 +58,9 @@ export default function Sanfona({ valores }) {
 
   const [itens, setItens] = useState(valores);
 
-  const addGroup = () => {
-    setItens([
-      ...itens,
-      {
-        id: itens.length,
-        tipo: 'GRUPO',
-        filhos: [],
-      }
-    ])
-  }
-
   return (
     <div className={classes.root}>
-      {
-        itens.map(renderPainel)
-      }
-
+      {itens.map(item => <Painel itens={itens} item={item} updateItens={setItens} />)}
     </div>
   );
 }
