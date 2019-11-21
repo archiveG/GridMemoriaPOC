@@ -31,13 +31,11 @@ export default function Cabecalho({ item, funcaoAdd }) {
 
     CRIAR_GRUPO_ACIMA: event => {
       event.preventDefault();
-      funcaoAdd();
-      toast.info(`Novo Grupo adicionado acima HEAD`);
+      funcaoAdd('GRUPO', item, `Novo Grupo adicionado acima`);
     },
     CRIAR_GRUPO_ABAIXO: event => {
       event.preventDefault();
-      funcaoAdd();
-      toast.info(`Novo Grupo adicionado abaixo HEAD`);
+      funcaoAdd('GRUPO', item, `Novo Grupo adicionado abaixo`);
     },
     CRIAR_SUB_GRUPO_ACIMA: event => {
       event.preventDefault();
@@ -50,11 +48,11 @@ export default function Cabecalho({ item, funcaoAdd }) {
 
     CRIAR_SERVICO_ACIMA: event => {
       event.preventDefault();
-      toast.info(`Novo Serviço adicionado acima HEAD`);
+      funcaoAdd('SERVICO', item, `Novo Serviço adicionado acima`);
     },
     CRIAR_SERVICO_ABAIXO: event => {
       event.preventDefault();
-      toast.info(`Novo Serviço adicionado abaixo HEAD`);
+      funcaoAdd('SERVICO', item, `Novo Serviço adicionado abaixo`);
     },
 
     EXCLUIR: event => {

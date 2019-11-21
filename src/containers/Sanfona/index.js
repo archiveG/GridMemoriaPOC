@@ -8,14 +8,13 @@ import GridMemoria from 'containers/GridMemoria';
 
 import styles from './styles';
 import Cabecalho from '../../components/Cabecalho';
+import { toast } from 'react-toastify';
 
 const useStyles = makeStyles(styles);
 
 const Painel = ({ itens, item, updateItens }) => {
 
-  const addGroup = (tipo, novo) => {
-    console.log('add Group');
-
+  const addGroup = (tipo, novo, mensagemSucesso) => {
     if(tipo === 'GRUPO') {
       updateItens([
         ...itens,
@@ -34,7 +33,13 @@ const Painel = ({ itens, item, updateItens }) => {
           ],
         }
       ])
+
+      toast.info(mensagemSucesso);
     } else if (tipo === 'SERVICO') {
+      if (novo.tipo === 'SERVICO') {
+        return;
+      }
+
       itens.forEach(a => {
         if(a.id === novo.id) {
           a.filhos.push({
@@ -47,6 +52,8 @@ const Painel = ({ itens, item, updateItens }) => {
       });
 
       updateItens([...itens]);
+
+      toast.info(mensagemSucesso);
     }
 
   };
