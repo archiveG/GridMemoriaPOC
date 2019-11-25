@@ -5,7 +5,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
 
 import { toast } from 'react-toastify';
-import teclas from '../../core/utils/teclas';
+import teclas from 'core/utils/teclas';
 
 const useStyles = makeStyles({
   campo: {
@@ -24,6 +24,7 @@ export default function Campo({ id, label, item, funcaoAdd }) {
 
     if (control && isTeclaValida(tecla)) {
       e.preventDefault();
+      e.stopPropagation();
 
       if (tecla === teclas.SETA_CIMA) {
         toast.info(`Novo ${item.tipo} adicionado acima`);

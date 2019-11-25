@@ -4,13 +4,12 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import { ExpansionPanelSummary } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { HotKeys } from 'react-hotkeys';
 import { toast } from 'react-toastify';
 
 import styles from './styles';
 import TextoReferencia from '../TextoReferencia';
 import Campo from '../Campo';
-import atalhos from '../../core/utils/atalhos';
+import teclas from 'core/utils/teclas';
 
 const useStyles = makeStyles(styles);
 
@@ -19,47 +18,42 @@ export default function Cabecalho({ item, funcaoAdd }) {
   const classes = useStyles();
   let focus = item.tipo === 'GRUPO' ? classes.cabecalhoGrupoFocus : item.tipo === 'SUBGRUPO' ? classes.cabecalhoSubGrupoFocus : classes.cabecalhoServicoFocus;
 
-  const handleAtalhos = {
-    CRIAR_IGUAL_ACIMA: event => {
-      event.preventDefault();
-      toast.info(`Novo ${item.tipo} adicionado acima HEAD`);
-    },
-    CRIAR_IGUAL_ABAIXO: event => {
-      event.preventDefault();
-      toast.info(`Novo ${item.tipo} adicionado abaixo HEAD`);
-    },
+  const keyPressed = e => {
+    let tecla = e.keyCode;
+    let control = e.ctrlKey;
+    let alt = e.altKey;
 
-    CRIAR_GRUPO_ACIMA: event => {
-      event.preventDefault();
-      funcaoAdd('GRUPO', item, `Novo Grupo adicionado acima`);
-    },
-    CRIAR_GRUPO_ABAIXO: event => {
-      event.preventDefault();
-      funcaoAdd('GRUPO', item, `Novo Grupo adicionado abaixo`);
-    },
-    CRIAR_SUB_GRUPO_ACIMA: event => {
-      event.preventDefault();
-      toast.info(`Novo Sub-grupo adicionado acima HEAD`);
-    },
-    CRIAR_SUB_GRUPO_ABAIXO: event => {
-      event.preventDefault();
-      toast.info(`Novo Sub-grupo adicionado abaixo HEAD`);
-    },
+    if (control && isTeclaValida(tecla)) {
+      e.preventDefault();
+      e.stopPropagation();
 
-    CRIAR_SERVICO_ACIMA: event => {
-      event.preventDefault();
-      funcaoAdd('SERVICO', item, `Novo Serviço adicionado acima`);
-    },
-    CRIAR_SERVICO_ABAIXO: event => {
-      event.preventDefault();
-      funcaoAdd('SERVICO', item, `Novo Serviço adicionado abaixo`);
-    },
+      if (tecla === teclas.SETA_CIMA) {
+        toast.info(`Novo ${item.tipo} adicionado acima`);
+      } else if (tecla === teclas.SETA_BAIXO) {
+        toast.info(`Novo ${item.tipo} adicionado abaixo`);
+      } else if (alt && tecla === teclas.G) {
+        funcaoAdd('GRUPO', item, `Novo Grupo adicionado acima`);
+      } else if (tecla === teclas.G) {
+        funcaoAdd('GRUPO', item, `Novo Grupo adicionado abaixo`);
+      } else if (alt && tecla === teclas.S) {
+        toast.info(`Novo Serviço adicionado acima`);
+      } else if (tecla === teclas.S) {
+        funcaoAdd('SERVICO', item, `Novo Serviço adicionado abaixo`);
+      } else if (alt && tecla === teclas.I) {
+        toast.info(`Novo SubGrupo adicionado acima`);
+      } else if (tecla === teclas.I) {
+        toast.info(`Novo SubGrupo adicionado abaixo`);
+      }
 
-    EXCLUIR: event => {
-      event.preventDefault();
-      toast.info(`item excluido HEAD`);
-    },
-  }
+    }
+  };
+
+  const isTeclaValida = codigoTecla => {
+    return codigoTecla !== teclas.C
+      && codigoTecla !== teclas.V
+      && codigoTecla !== teclas.A
+      && codigoTecla !== teclas.X
+  };
 
   const createSummary = (item) => {
     if (item.tipo === 'GRUPO' || item.tipo === 'SUBGRUPO') {
@@ -79,19 +73,18 @@ export default function Cabecalho({ item, funcaoAdd }) {
           <Campo id={`serv_ref_${item.id}`} label="Referencial" item={item} funcaoAdd={funcaoAdd} />
           <Campo id={`serv_codaux_${item.id}`} label="Codigo Auxiliar" item={item} funcaoAdd={funcaoAdd} />
           <Campo id={`serv_desc_${item.id}`} label="Descrição do serviço" item={item} funcaoAdd={funcaoAdd} />
-          <Campo id={`serv_qtd_${item.id}`} label="Quantidade" item={item} funcaoAdd={funcaoAdd} />
           <Campo id={`serv_unid_${item.id}`} label="Unidade Medida" item={item} funcaoAdd={funcaoAdd} />
+          <Campo id={`serv_qtd_${item.id}`} label="Quantidade" item={item} funcaoAdd={funcaoAdd} />
         </div>
       );
     }
   };
 
   return (
-    <HotKeys keyMap={atalhos} handlers={handleAtalhos}>
-      <ExpansionPanelSummary className={focus} expandIcon={<ExpandMoreIcon />}>
+
+      <ExpansionPanelSummary className={focus} expandIcon={<ExpandMoreIcon />} onKeyDown={keyPressed}>
         {createSummary(item)}
       </ExpansionPanelSummary>
-    </HotKeys>
   );
 }
 
